@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'section_model.dart';
 
 void main() {
   runApp(MyApp());
@@ -22,28 +23,55 @@ class MyApp extends StatelessWidget {
   }
 }
 
+const List<Section> sections = <Section>[
+  Section(id: 'all', title: 'All'),
+  Section(id: 'hot', title: 'Hot'),
+  Section(id: 'cool', title: 'Cool'),
+];
+
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text(
-          'All',
-          style: TextStyle(
-            color: Colors.black,
-          ),
+    return MaterialApp(
+        home: DefaultTabController(
+      length: sections.length,
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(48),
+          child: AppBar(
+              actions: <Widget>[
+                new IconButton(
+                  icon: new Icon(Icons.plus_one),
+                  tooltip: 'Add prep list',
+                  onPressed: () => {},
+                ),
+              ],
+              backgroundColor: Colors.white,
+              bottom: TabBar(
+                  indicatorColor: Colors.black,
+                  isScrollable: true,
+                  labelColor: Colors.black,
+                  unselectedLabelColor: Colors.black45,
+                  tabs: sections.map<Widget>((Section section) {
+                    return Tab(text: section.title);
+                  }).toList())),
         ),
-        centerTitle: false,
-      ),
-      body: SingleChildScrollView(
-        child: Column(
+        body: TabBarView(
           children: [
-            DatePicker(),
+            Tab(text: 'section All selected'),
+            Tab(text: 'section Hot selected'),
+            Tab(text: 'section Cool selected'),
           ],
         ),
+        // body: SingleChildScrollView(
+        //       child: Column(
+        //         children: [
+        //           DatePicker(),
+        //         ],
+        //       ),
+        //     ),
       ),
-    );
+    ));
   }
 }
 
