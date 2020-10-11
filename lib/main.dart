@@ -36,26 +36,30 @@ class HomeScreen extends StatelessWidget {
         home: DefaultTabController(
       length: sections.length,
       child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(48),
-          child: AppBar(
-              actions: <Widget>[
-                new IconButton(
-                  icon: new Icon(Icons.plus_one),
-                  tooltip: 'Add prep list',
-                  onPressed: () => {},
-                ),
-              ],
-              backgroundColor: Colors.white,
-              bottom: TabBar(
-                  indicatorColor: Colors.black,
-                  isScrollable: true,
-                  labelColor: Colors.black,
-                  unselectedLabelColor: Colors.black45,
-                  tabs: sections.map<Widget>((Section section) {
-                    return Tab(text: section.title);
-                  }).toList())),
-        ),
+        appBar: AppBar(
+            elevation: 0.0,
+            backgroundColor: Colors.white,
+            actions: <Widget>[
+              IconButton(
+                  icon: Icon(
+                    Icons.add,
+                    color: Colors.black,
+                  ),
+                  onPressed: () {})
+            ],
+            bottom: PreferredSize(
+              preferredSize: Size.fromHeight(25),
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: TabBar(
+                      indicatorColor: Colors.black,
+                      isScrollable: true,
+                      labelColor: Colors.black,
+                      unselectedLabelColor: Colors.black45,
+                      tabs: sections.map<Widget>((Section section) {
+                        return Tab(text: section.title);
+                      }).toList())),
+            )),
         body: TabBarView(
           children: [
             Tab(text: 'section All selected'),
