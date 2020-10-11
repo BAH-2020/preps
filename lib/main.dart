@@ -48,7 +48,7 @@ class HomeScreen extends StatelessWidget {
                   onPressed: () {})
             ],
             bottom: PreferredSize(
-              preferredSize: Size.fromHeight(25),
+              preferredSize: Size.fromHeight(20),
               child: Align(
                   alignment: Alignment.centerLeft,
                   child: TabBar(
@@ -60,21 +60,24 @@ class HomeScreen extends StatelessWidget {
                         return Tab(text: section.title);
                       }).toList())),
             )),
-        body: TabBarView(
-          children: [
-            Tab(text: 'section All selected'),
-            Tab(text: 'section Hot selected'),
-            Tab(text: 'section Cool selected'),
-          ],
+        body: Column(
+          children: [DatePicker(), Expanded(child: SectionContent())],
         ),
-        // body: SingleChildScrollView(
-        //       child: Column(
-        //         children: [
-        //           DatePicker(),
-        //         ],
-        //       ),
-        //     ),
       ),
+    ));
+  }
+}
+
+class SectionContent extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        child: TabBarView(
+      children: [
+        Tab(text: 'section All selected'),
+        Tab(text: 'section Hot selected'),
+        Tab(text: 'section Cool selected'),
+      ],
     ));
   }
 }
