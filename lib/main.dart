@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'section_model.dart';
 
 void main() {
   runApp(MyApp());
@@ -22,28 +23,62 @@ class MyApp extends StatelessWidget {
   }
 }
 
+const List<Section> sections = <Section>[
+  Section(id: 'all', title: 'All'),
+  Section(id: 'hot', title: 'Hot'),
+  Section(id: 'cool', title: 'Cool'),
+];
+
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text(
-          'All',
-          style: TextStyle(
-            color: Colors.black,
-          ),
+    return MaterialApp(
+        home: DefaultTabController(
+      length: sections.length,
+      child: Scaffold(
+        appBar: AppBar(
+            elevation: 0.0,
+            backgroundColor: Colors.white,
+            actions: <Widget>[
+              IconButton(
+                  icon: Icon(
+                    Icons.add,
+                    color: Colors.black,
+                  ),
+                  onPressed: () {})
+            ],
+            bottom: PreferredSize(
+              preferredSize: Size.fromHeight(20),
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: TabBar(
+                      indicatorColor: Colors.black,
+                      isScrollable: true,
+                      labelColor: Colors.black,
+                      unselectedLabelColor: Colors.black45,
+                      tabs: sections.map<Widget>((Section section) {
+                        return Tab(text: section.title);
+                      }).toList())),
+            )),
+        body: Column(
+          children: [DatePicker(), Expanded(child: SectionContent())],
         ),
-        centerTitle: false,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            DatePicker(),
-          ],
-        ),
-      ),
-    );
+    ));
+  }
+}
+
+class SectionContent extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        child: TabBarView(
+      children: [
+        Tab(text: 'section All selected'),
+        Tab(text: 'section Hot selected'),
+        Tab(text: 'section Cool selected'),
+      ],
+    ));
   }
 }
 
