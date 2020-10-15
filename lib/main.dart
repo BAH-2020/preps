@@ -1,3 +1,4 @@
+import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/material.dart';
 import 'section_model.dart';
 
@@ -61,7 +62,7 @@ class HomeScreen extends StatelessWidget {
                       }).toList())),
             )),
         body: Column(
-          children: [DatePicker(), Expanded(child: SectionContent())],
+          children: [CustomDatePicker(), Expanded(child: SectionContent())],
         ),
       ),
     ));
@@ -82,56 +83,44 @@ class SectionContent extends StatelessWidget {
   }
 }
 
-class DatePicker extends StatelessWidget {
+class CustomDatePicker extends StatefulWidget {
+  @override
+  _CustomDatePickerState createState() => _CustomDatePickerState();
+}
+
+class _CustomDatePickerState extends State<CustomDatePicker> {
+  DatePickerController _controller = DatePickerController();
+
+  DateTime _selectedValue = DateTime.now();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 80,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          return _buildDatePickerListItem();
-        },
-        itemCount: 3,
-      ),
-    );
-  }
-
-  Widget _buildDatePickerListItem({bool active = false}) {
-    final Color activeColor = active ? Colors.black : Colors.transparent;
-    final Color activeTextColor = active ? Colors.white : Colors.black;
-    final double size = 32;
-
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Column(
-        children: [
-          Text(
-            'M',
-            style: TextStyle(
-              color: Colors.black26,
-              fontSize: 12,
-            ),
-          ),
-          SizedBox(height: 2),
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
           Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(size),
-              color: activeColor,
-            ),
-            height: size,
-            width: size,
-            child: Center(
-              child: Text(
-                '10',
-                style: TextStyle(
-                  color: activeTextColor,
-                ),
-              ),
-            ),
-          )
-        ],
-      ),
-    );
+              child: DatePicker(
+            DateTime.now(),
+            width: 60,
+            height: 80,
+            controller: _controller,
+            initialSelectedDate: DateTime.now(),
+            selectionColor: Colors.black,
+            selectedTextColor: Colors.white,
+            // inactiveDates: [],
+            onDateChange: (date) {
+              // New date selected
+              setState(() {
+                _selectedValue = date;
+              });
+            },
+          ))
+        ]));
   }
 }
